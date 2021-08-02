@@ -1,6 +1,7 @@
 package tv.vdx.assignmentvdx.cache.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import tv.vdx.assignmentvdx.CacheValidator;
 import tv.vdx.assignmentvdx.cache.CustomCache;
 import tv.vdx.assignmentvdx.dump.DataWriteStrategy;
@@ -77,7 +78,8 @@ public class TimedCache<K, V> implements CustomCache<K, V> {
      */
     private void cleanup() {
 
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1,
+                new BasicThreadFactory.Builder().daemon(true).build());
         executorService.scheduleAtFixedRate(() -> {
             while (isExpired(this.timedHeap.peek().getCreationTime(), this.ttl)) {
                 log.info("cleanup started" + LocalDateTime.now());

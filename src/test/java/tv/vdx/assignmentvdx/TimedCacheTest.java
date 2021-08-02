@@ -17,7 +17,8 @@ import static tv.vdx.assignmentvdx.dump.DataWriteStrategyEnum.FILE_WRITER;
 @ExtendWith(MockitoExtension.class)
 public class TimedCacheTest {
 
-    // tests can be extended to test on single instance of cache with more multi-threads.
+    // below are basic tests to check cache working with expired and non expired keys
+    // If given time, gtests can be extended to test on single instance of cache with multi-threads.
 
     @Test
     public void givenDataThenShouldWriteExpiredKeysToFile() throws InterruptedException {
