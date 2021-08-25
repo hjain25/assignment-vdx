@@ -16,7 +16,6 @@ public class FileWriterStrategy implements DataWriteStrategy {
     @Override
     public void write(Object data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/dump/cacheData.txt", true))) {
-            writer.newLine();
             writer.append(data.toString());
         } catch (IOException e) {
             log.error("data write op data to file failed : ", e);

@@ -5,6 +5,10 @@ package tv.vdx.assignmentvdx.dump;
  */
 public interface DataWriteStrategy {
 
+    /**
+     * write data to storage
+     * @param data
+     */
     void write(Object data);
 
     DataWriteStrategyEnum getStrategyName();

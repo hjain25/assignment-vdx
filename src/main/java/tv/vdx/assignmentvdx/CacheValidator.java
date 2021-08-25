@@ -2,14 +2,8 @@ package tv.vdx.assignmentvdx;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.util.StringUtils;
-import org.yaml.snakeyaml.util.EnumUtils;
 import tv.vdx.assignmentvdx.dump.DataWriteStrategyEnum;
 import tv.vdx.assignmentvdx.exception.CustomCacheException;
-
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.*;
 
 @NoArgsConstructor(access =  AccessLevel.PRIVATE)
 public class CacheValidator {

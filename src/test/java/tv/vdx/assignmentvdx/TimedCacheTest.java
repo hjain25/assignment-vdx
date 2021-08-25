@@ -1,6 +1,7 @@
 package tv.vdx.assignmentvdx;
 
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -9,7 +10,7 @@ import tv.vdx.assignmentvdx.cache.impl.TimedCache;
 import tv.vdx.assignmentvdx.dump.DataWriteStrategyEnum;
 import tv.vdx.assignmentvdx.dump.FileWriterStrategy;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static tv.vdx.assignmentvdx.dump.DataWriteStrategyEnum.FILE_WRITER;
@@ -23,17 +24,35 @@ public class TimedCacheTest {
     @Test
     public void givenDataThenShouldWriteExpiredKeysToFile() throws InterruptedException {
 
-        CustomCache<String, Integer> timedCache = new TimedCache(TimeUnit.SECONDS, 5, FILE_WRITER);
+        CustomCache<String, Integer> timedCache = new TimedCache(TimeUnit.SECONDS, 2, FILE_WRITER);
         timedCache.put("1", 1);
-        Thread.sleep(200);
+        Thread.sleep(1000);
         timedCache.put("2", 2);
-        Thread.sleep(200);
+        Thread.sleep(1000);
         timedCache.put("3", 3);
         Thread.sleep(6000);
 
         assertThat(timedCache.get("1")).isNull();
     }
 
+
+    class Demo{
+        @SneakyThrows
+        public Demo(){
+//            start();
+        }
+
+        public void start() throws InterruptedException {
+            ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
+            ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
+                while(true){
+                    System.out.println("Hello World");
+                }
+
+            }, 10, 20, TimeUnit.MILLISECONDS);
+            future.cancel(true);
+        }
+    }
     @Test
     public void givenDataThenShouldReturnNonExpiredData() throws InterruptedException {
 
